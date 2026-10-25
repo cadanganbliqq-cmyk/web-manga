@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Manga Sederhana</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: #fff; padding: 20px; margin: 0; }
+        h1 { color: #ff5722; }
+        .manga-card { background: #1e1e1e; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Daftar Manga Favorit</h1>
+    <div id="manga-list">Memuat data dari TypeScript...</div>
+
+    <script type="module">
+        // Nanti kita sambungkan ke file TS / JS hasil build Vercel di sini
+        fetch('/api/manga')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('manga-list');
+                container.innerHTML = data.map(m => `
+                    <div class="manga-card">
+                        <h3>${m.title}</h3>
+                        <p>Genre: ${m.genre}</p>
+                    </div>
+                `).join('');
+            })
+            .catch(err => {
+                document.getElementById('manga-list').innerText = "Gagal memuat data.";
+            });
+    </script>
+</body>
+</html>
